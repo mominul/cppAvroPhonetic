@@ -17,16 +17,16 @@ I am using Code::Blocks for standing the project ... when all things are good st
 ##License
 Developer : Muhammad Mominul Huque <<nahidbinbaten1995@gmail.com>>
 
-        CAvroPhonetic
-        avro.c
+	CAvroPhonetic
+    avro.c
         
-        C++ implementation of popular Bnagla writing method Avro Phonetic
+    C++ implementation of popular Bnagla writing method Avro Phonetic
         
-        Copyright (C) OmicronLab (http://www.omicronlab.com)
-        Developer: Muhammad Mominul Huque
+    Copyright (C) OmicronLab (http://www.omicronlab.com)
+    Developer: Muhammad Mominul Huque
         
-        This Source Code Form is subject to the terms of the Mozilla Public
-        License, v. 2.0. If a copy of the MPL was not distributed with this
-        file, You can obtain one at http://mozilla.org/MPL/2.0/.
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
  
 The full license text can be found in `LICENSE`.
