@@ -3,18 +3,18 @@ cppAvroPhonetic
 
 A C++ implementation of Avro Phonetic
 
-#Not Stable!
+##Not Stable!
 This project is not stable and maybe not usable! :wink:
 
-#Project Status
+##Project Status
 I am using Code::Blocks for standing the project ... when all things are good standalone
 
-#Acknowledgements
+##Acknowledgements
 
  - Mehdi Hasan Khan for originally developing and maintaining Avro Phonetic and for his friendly help.
  - Rifat Nabi for his [scim-avro](https://code.google.com/p/scim-avro/)
  
-#License
+##License
 Developer : Muhammad Mominul Huque <<nahidbinbaten1995@gmail.com>>
 
         CAvroPhonetic
