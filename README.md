@@ -1,5 +1,5 @@
-cppAvroPhonetic
-===============
+# cppAvroPhonetic
+[![Build Status](https://travis-ci.org/mominul/cppAvroPhonetic.svg?branch=master)](https://github.com/mominul/cppAvroPhonetic)
 
 A C++ implementation of Avro Phonetic
 
@@ -15,7 +15,7 @@ A C++ implementation of Avro Phonetic
 
 ### Dependency
 
-**cppAvroPhonetic** or **avrophonetic.hpp** depends on **STL** and **C++11** specification. So you will need a C++11 compliant compiler to compile. It supports these compilers:
+**cppAvroPhonetic** or **avrophonetic.hpp** depends on **STL** and **C++11** specification. So you will need a C++11 compliant compiler to compile. C++11 is supported by these compilers:
 * GCC
 * Clang
 * Microsoft Visual C++
