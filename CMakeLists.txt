@@ -1,3 +1,4 @@
+# From https://github.com/nlohmann/json
 cmake_minimum_required(VERSION 2.8)
 
 project(cppAvroPhonetic)

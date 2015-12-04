@@ -1,4 +1,7 @@
+# from https://github.com/nlohmann/json
 language: cpp
+
+sudo: false
 
 matrix:
   include:
