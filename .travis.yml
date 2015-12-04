@@ -1,0 +1,18 @@
+language: cpp
+
+os:
+  - linux
+  - osx
+
+compiler:
+  - g++
+  - clang
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake ..
+
+script:
+  - make
+  - ./avro_test
