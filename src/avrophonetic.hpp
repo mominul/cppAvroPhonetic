@@ -1,29 +1,11 @@
 /*
- * cppAvroPhonetic
- * englishtobangla.cpp
+ *  cppAvroPhonetic - C++ implementation of Avro Phonetic
+ *  Copyright (C) 2014-2015 Muhammad Mominul Huque <nahidbinbaten1995@gmail.com>
  *
- * C++ implementation of popular Bnagla writing method Avro Phonetic
- *
- * Copyright (C) OmicronLab (http://www.omicronlab.com)
- * Developer: Muhammad Mominul Huque
- *
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- */
-
-/*
- *  Copyright (C) OmicronLab (http://www.omicronlab.com)
- *
- *  Developer: M M Rifat-Un-Nabi, Mehdi Hasan Khan
- *
- *  Listen us on http://www.twitter.com/omicronlab
- *  Support Forum: http://www.omicronlab.com/forum/
- *
- *  This program is free software; you can redistribute it and/or modify
+ *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2, or (at your option)
- *  any later version.find_consonent_by_key
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -31,228 +13,112 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef AVRO_PHONETIC_HPP
+#define AVRO_PHONETIC_HPP
 
+#include <algorithm>
+#include <string>
 
-//#include <scim.h>
-#include "englishtobangla.h"
+class AvroPhonetic {
+private:
+  std::string pEnglishText;
+  int ln; //Length of English string
+  int pos; //Position of processing at English string
+  std::string Rs; //Result string
+  bool AutoCorrect;
 
+  //Bangla Numbers
+  std::string b_0 = "\u09E6";
+  std::string b_1 = "\u09E7";
+  std::string b_2 = "\u09E8";
+  std::string b_3 = "\u09E9";
+  std::string b_4 = "\u09EA";
+  std::string b_5 = "\u09EB";
+  std::string b_6 = "\u09EC";
+  std::string b_7 = "\u09ED";
+  std::string b_8 = "\u09EE";
+  std::string b_9 = "\u09EF";
+  //Bangla Vowels and Kars
+  std::string b_A = "\u0985";
+  std::string b_AA = "\u0986";
+  std::string b_AAkar = "\u09BE";
+  std::string b_I = "\u0987";
+  std::string b_II = "\u0988";
+  std::string b_IIkar = "\u09C0";
+  std::string b_Ikar = "\u09BF";
+  std::string b_U = "\u0989";
+  std::string b_Ukar = "\u09C1";
+  std::string b_UU = "\u098A";
+  std::string b_UUkar = "\u09C2";
+  std::string b_RRI = "\u098B";
+  std::string b_RRIkar = "\u09C3";
+  std::string b_E = "\u098F";
+  std::string b_Ekar = "\u09C7";
+  std::string b_O = "\u0993";
+  std::string b_OI = "\u0990";
+  std::string b_OIkar = "\u09C8";
+  std::string b_Okar = "\u09CB";
+  std::string b_OU = "\u0994";
+  std::string b_OUkar = "\u09CC";
+  //Bangla Consonents
+  std::string b_Anushar = "\u0982";
+  std::string b_B = "\u09AC";
+  std::string b_Bh = "\u09AD";
+  std::string b_Bisharga = "\u0983";
+  std::string b_C = "\u099A";
+  std::string b_CH = "\u099B";
+  std::string b_Chandra = "\u0981";
+  std::string b_D = "\u09A6";
+  std::string b_Dd = "\u09A1";
+  std::string b_Ddh = "\u09A2";
+  std::string b_Dh = "\u09A7";
+  std::string b_G = "\u0997";
+  std::string b_GH = "\u0998";
+  std::string b_H = "\u09B9";
+  std::string b_J = "\u099C";
+  std::string b_JH = "\u099D";
+  std::string b_K = "\u0995";
+  std::string b_KH = "\u0996";
+  std::string b_L = "\u09B2";
+  std::string b_M = "\u09AE";
+  std::string b_N = "\u09A8";
+  std::string b_NGA = "\u0999";
+  std::string b_Nn = "\u09A3";
+  std::string b_NYA = "\u099E";
+  std::string b_P = "\u09AA";
+  std::string b_Ph = "\u09AB";
+  std::string b_R = "\u09B0";
+  std::string b_Rr = "\u09DC";
+  std::string b_Rrh = "\u09DD";
+  std::string b_S = "\u09B8";
+  std::string b_Sh = "\u09B6";
+  std::string b_Ss = "\u09B7";
+  std::string b_T = "\u09A4";
+  std::string b_Th = "\u09A5";
+  std::string b_Tt = "\u099F";
+  std::string b_Tth = "\u09A0";
+  std::string b_Y = "\u09DF";
+  std::string b_Z = "\u09AF";
+  std::string AssamRa = "\u09F0";
+  std::string AssamVa = "\u09F1";
+  std::string b_Khandatta = "\u09CE";
+  //Bangla Others
+  std::string b_Dari = "\u0964";
+  std::string b_Hasanta = "\u09CD";
+  std::string b_Taka = "\u09F3";
+  std::string ZWJ = "\u200D";
+  std::string ZWNJ = "\u200C";
+  std::string b_Nukta = "\u09BC";
 
-
-////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-////////////                                       ////////////
-////////////          Public Functions             ////////////
-////////////                                       ////////////
-////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-
-
-
-
-cEnglishToBangla::cEnglishToBangla()
-{
-    InitVars();
-    AutoCorrect = false;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-WideString
-cEnglishToBangla::Convert (const String EnglishT)
-{
-    WideString tempConvert ;
-
-    String EngStr = "";
-
-    String Starting_Ignoreable_T = "";
-    String Middle_Main_T = "";
-    String Ending_Ignorable_T = "";
-
-    EngStr = CorrectCase(EnglishT);
-
-    /*
-    if (AutoCorrect == true)
-    	{
-    		if (Dict::Exist(EngStr) == true)
-    		{
-    			pEnglishText = Dict[EngStr];
-    			tempConvert = MyConvert;
-    		}
-    		else
-    		{
-    			//Whole word not found in the dictionary, lets try ignoring punctuations
-
-    			CutText EngStr, Starting_Ignoreable_T, Middle_Main_T, Ending_Ignorable_T;
-
-    			if (Dict::Exist(Middle_Main_T) == true)
-    			{
-
-    std::string tempStr = "";
-
-    				if (Starting_Ignoreable_T != "")
-    				{
-    					pEnglishText = Starting_Ignoreable_T;
-    					tempStr = MyConvert;
-    				}
-
-    				if (Middle_Main_T != "")
-    				{
-    					pEnglishText = Dict[Middle_Main_T];
-    					tempStr = tempStr + MyConvert;
-    				}
-
-    				if (Ending_Ignorable_T != "")
-    				{
-    					pEnglishText = Ending_Ignorable_T;
-    					tempStr = tempStr + MyConvert;
-    				}
-
-    				tempConvert = tempStr;
-
-    			}
-    			else //Autocorrect enabled but word not found even after ignoring punctuations
-    			{
-    				pEnglishText = EngStr;
-    				tempConvert = MyConvert;
-    			}
-    		}
-    	}
-    	else
-    	{
-    		pEnglishText = EngStr;
-    		tempConvert = MyConvert;
-    	}
-    */
-
-
-    /* FIXME:  Eliminate the following two lines and uncomment above when autocorrect is implemented */
-    pEnglishText = EngStr;
-    tempConvert = MyConvert();
-
-    return tempConvert;
-
-}
-
-
-
-////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-////////////                                       ////////////
-////////////          Private Functions            ////////////
-////////////                                       ////////////
-////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::InitVars()
-{
-//Bangla Numbers
-    b_0=ucs4_t(0x9E6);
-    b_1=ucs4_t(0x9E7);
-    b_2=ucs4_t(0x9E8);
-    b_3=ucs4_t(0x9E9);
-    b_4=ucs4_t(0x9EA);
-    b_5=ucs4_t(0x9EB);
-    b_6=ucs4_t(0x9EC);
-    b_7=ucs4_t(0x9ED);
-    b_8=ucs4_t(0x9EE);
-    b_9=ucs4_t(0x9EF);
-//Bangla Vowels and Kars
-    b_A=ucs4_t(0x985);
-    b_AA=ucs4_t(0x986);
-    b_AAkar=ucs4_t(0x9BE);
-    b_I=ucs4_t(0x987);
-    b_II=ucs4_t(0x988);
-    b_IIkar=ucs4_t(0x9C0);
-    b_Ikar=ucs4_t(0x9BF);
-    b_U=ucs4_t(0x989);
-    b_Ukar=ucs4_t(0x9C1);
-    b_UU=ucs4_t(0x98A);
-    b_UUkar=ucs4_t(0x9C2);
-    b_RRI=ucs4_t(0x98B);
-    b_RRIkar=ucs4_t(0x9C3);
-    b_E=ucs4_t(0x98F);
-    b_Ekar=ucs4_t(0x9C7);
-    b_O=ucs4_t(0x993);
-    b_OI=ucs4_t(0x990);
-    b_OIkar=ucs4_t(0x9C8);
-    b_Okar=ucs4_t(0x9CB);
-    b_OU=ucs4_t(0x994);
-    b_OUkar=ucs4_t(0x9CC);
-//Bangla Consonents
-    b_Anushar=ucs4_t(0x982);
-    b_B=ucs4_t(0x9AC);
-    b_Bh=ucs4_t(0x9AD);
-    b_Bisharga=ucs4_t(0x983);
-    b_C=ucs4_t(0x99A);
-    b_CH=ucs4_t(0x99B);
-    b_Chandra=ucs4_t(0x981);
-    b_D=ucs4_t(0x9A6);
-    b_Dd=ucs4_t(0x9A1);
-    b_Ddh=ucs4_t(0x9A2);
-    b_Dh=ucs4_t(0x9A7);
-    b_G=ucs4_t(0x997);
-    b_GH=ucs4_t(0x998);
-    b_H=ucs4_t(0x9B9);
-    b_J=ucs4_t(0x99C);
-    b_JH=ucs4_t(0x99D);
-    b_K=ucs4_t(0x995);
-    b_KH=ucs4_t(0x996);
-    b_L=ucs4_t(0x9B2);
-    b_M=ucs4_t(0x9AE);
-    b_N=ucs4_t(0x9A8);
-    b_NGA=ucs4_t(0x999);
-    b_Nn=ucs4_t(0x9A3);
-    b_NYA=ucs4_t(0x99E);
-    b_P=ucs4_t(0x9AA);
-    b_Ph=ucs4_t(0x9AB);
-    b_R=ucs4_t(0x9B0);
-    b_Rr=ucs4_t(0x9DC);
-    b_Rrh=ucs4_t(0x9DD);
-    b_S=ucs4_t(0x9B8);
-    b_Sh=ucs4_t(0x9B6);
-    b_Ss=ucs4_t(0x9B7);
-    b_T=ucs4_t(0x9A4);
-    b_Th=ucs4_t(0x9A5);
-    b_Tt=ucs4_t(0x99F);
-    b_Tth=ucs4_t(0x9A0);
-    b_Y=ucs4_t(0x9DF);
-    b_Z=ucs4_t(0x9AF);
-    AssamRa=ucs4_t(0x9F0);
-    AssamVa=ucs4_t(0x9F1);
-    b_Khandatta=ucs4_t(0x9CE);
-//Bangla Others
-    b_Dari=ucs4_t(0x964);
-    b_Hasanta=ucs4_t(0x9CD);
-    b_Taka=ucs4_t(0x9F3);
-    ZWJ=ucs4_t(0x200D);
-    ZWNJ=ucs4_t(0x200C);
-    b_Nukta=ucs4_t(0x9BC);
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::CutText (String inputEStr, String &outSIgnore, String &outMidMain, String &outEIgnore)
-{
+  void CutText(std::string inputEStr, std::string &outSIgnore, std::string &outMidMain, std::string &outEIgnore)
+  {
     int i = 0;
     int p = 0;
     int q = 0;
     int EStrLen = 0;
-    String tStr = "";
+    std::string tStr = "";
 
     EStrLen = inputEStr.length();
 
@@ -317,7 +183,7 @@ ExitLabel1:
     //End Cutting outSIgnore
 
     //Start Cutting outEIgnore
-    String reverse_inputEStr = inputEStr;
+    std::string reverse_inputEStr = inputEStr;
 
     std::reverse(reverse_inputEStr.begin(),reverse_inputEStr.end());
 
@@ -384,23 +250,15 @@ ExitLabel2:
     tStr = tStr.substr(0, tStr.length() - q);
     outMidMain = tStr;
     //End Cutting outMidMain
+  }
 
-
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-WideString
-cEnglishToBangla::MyConvert()
-{
-    String tt = ""; //Temporary string
+  std::string MyConvert()
+  {
+    std::string tt = ""; //Temporary string
 
     ln = pEnglishText.length();
     pos = 1;
-    Rs = utf8_mbstowcs(String(""));
+    Rs = "";
 
     do
     {
@@ -458,10 +316,10 @@ cEnglishToBangla::MyConvert()
             smallO();
 
         }
-	else if (tt=="A")
-	{
-	    AddRs (b_AA); //Force AA
-	}
+	      else if (tt=="A")
+	      {
+	          AddRs (b_AA); //Force AA
+	      }
         else if (tt == "a")
         {
             if (NextT() == "Z")
@@ -774,7 +632,7 @@ cEnglishToBangla::MyConvert()
             }
             else
             {
-                AddRsEx (utf8_mbstowcs(String(":")), 2);
+                AddRsEx (":", 2);
             }
 
         }
@@ -786,7 +644,7 @@ cEnglishToBangla::MyConvert()
             }
             else
             {
-                AddRsEx (utf8_mbstowcs(String("^")), 2);
+                AddRsEx ("^", 2);
             }
 
         }
@@ -798,7 +656,7 @@ cEnglishToBangla::MyConvert()
             }
             else
             {
-                AddRs (utf8_mbstowcs(String(",")));
+                AddRs (",");
             }
 
         }
@@ -815,32 +673,23 @@ cEnglishToBangla::MyConvert()
         }
         else
         {
-            AddRs (utf8_mbstowcs(tt));
+            AddRs (tt);
 
         }
     }
     while (pos <= ln);
 
     return Rs;
+  }
 
-}
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::Dot()
-{
-    if (Cnv("...", utf8_mbstowcs(String("..."))) == true) //...
+  void Dot()
+  {
+    if (Cnv("...", "...") == true) //...
     {
         return;
     }
 
-    if (Cnv(".`", utf8_mbstowcs(String("."))) == true) //.
+    if (Cnv(".`", ".") == true) //.
     {
         return;
     }
@@ -849,20 +698,22 @@ cEnglishToBangla::Dot()
         return;
     }
 
+    if(Number(NextT()))
+    {
+      if(Cnv(".", ".") == true) // Decimal Mark
+      {
+        return;
+      }
+    }
+
     if (Cnv(".", b_Dari) == true) //|
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::smallO()
-{
+  void smallO()
+  {
     if (((Consonent(PrevT()) == false) || (Begining() == true)) && (NextT() != "`"))
     {
         if (Cnv("oo", b_U) == true) //U
@@ -894,24 +745,18 @@ cEnglishToBangla::smallO()
     {
         return;
     }
-    if (Cnv("o`", utf8_mbstowcs(String(""))) == true) //Nothing
+    if (Cnv("o`", "") == true) //Nothing
     {
         return;
     }
-    if (Cnv("o", utf8_mbstowcs(String(""))) == true) //Nothing
+    if (Cnv("o", "") == true) //Nothing
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::O()
-{
+  void O()
+  {
     if (Cnv("OI`", b_OIkar) == true) //OIKar
     {
         return;
@@ -956,21 +801,14 @@ cEnglishToBangla::O()
             return;
         }
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-String
-cEnglishToBangla::CorrectCase (String inputT)
-{
+  std::string CorrectCase(std::string inputT)
+  {
     int i = 0;
-    String s = "";
+    std::string s = "";
     int l = 0;
-    String T = "";
+    std::string T = "";
 
     l = inputT.length();
 
@@ -987,22 +825,16 @@ cEnglishToBangla::CorrectCase (String inputT)
         }
         else
         {
-            std::transform (T.begin(), T.end(), T.begin(), tolower);
+            std::transform (T.begin(), T.end(), T.begin(), ::tolower);
             s = s + T;
         }
     }
 
     return s;
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::h()
-{
+  void h()
+  {
     if (Cnv("hN", b_H + b_Hasanta + b_Nn) == true) //H+Nn
     {
         return;
@@ -1024,16 +856,10 @@ cEnglishToBangla::h()
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::s()
-{
+  void s()
+  {
     if (Cnv("shch", b_Sh + b_Hasanta + b_CH) == true) //Sh+Chh
     {
         return;
@@ -1082,6 +908,10 @@ cEnglishToBangla::s()
     if (Cnv("shm", b_Sh + b_Hasanta + b_M) == true) //Sh+M
     {
         return;
+    }
+    if(Cnv("spl", b_S + b_Hasanta + b_P + b_Hasanta + b_L) == true) //s+p+l
+    {
+      return;
     }
     if (Cnv("shl", b_Sh + b_Hasanta + b_L) == true) //Sh+L
     {
@@ -1185,16 +1015,10 @@ cEnglishToBangla::s()
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::l()
-{
+  void l()
+  {
     if (Cnv("lbh", b_L + b_Hasanta + b_Bh) == true) //L+Bh
     {
         return;
@@ -1258,16 +1082,10 @@ cEnglishToBangla::l()
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::R()
-{
+  void R()
+  {
     if (NextTEx(1, 2) == "`")
     {
         if (Cnv("rri", b_RRIkar) == true) //RRI-Kar
@@ -1334,18 +1152,10 @@ cEnglishToBangla::R()
     {
         return;
     }
-}
+  }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::m()
-{
+  void m()
+  {
     if (Cnv("mth", b_M + b_Hasanta + b_Th) == true) //M+Th
     {
         return;
@@ -1357,6 +1167,10 @@ cEnglishToBangla::m()
     if (Cnv("mbh", b_M + b_Hasanta + b_Bh) == true) //M+V
     {
         return;
+    }
+    if(Cnv("mpl", b_M + b_P + b_Hasanta + b_L) == true) //
+    {
+      return;
     }
 
     if (Cnv("mn", b_M + b_Hasanta + b_N) == true) //M+N
@@ -1392,16 +1206,10 @@ cEnglishToBangla::m()
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::b()
-{
+  void b()
+  {
     if (Cnv("bdh", b_B + b_Hasanta + b_Dh) == true) //B+Dh
     {
         return;
@@ -1444,16 +1252,9 @@ cEnglishToBangla::b()
     {
         return;
     }
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::p()
-{
+  }
+  void p()
+  {
     if (Cnv("phl", b_Ph + b_Hasanta + b_L) == true) //Ph+L
     {
         return;
@@ -1500,18 +1301,10 @@ cEnglishToBangla::p()
     {
         return;
     }
-}
+  }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::d()
-{
+  void d()
+  {
     if (Cnv("dhn", b_Dh + b_Hasanta + b_N) == true) //Dh+N
     {
         return;
@@ -1570,16 +1363,10 @@ cEnglishToBangla::d()
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::T()
-{
+  void T()
+  {
     if (Cnv("tth", b_T + b_Hasanta + b_Th) == true) //T+Th
     {
         return;
@@ -1626,17 +1413,10 @@ cEnglishToBangla::T()
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::J()
-{
+  void J()
+  {
     if (Cnv("jjh", b_J + b_Hasanta + b_JH) == true) //J+Jh
     {
         return;
@@ -1657,20 +1437,20 @@ cEnglishToBangla::J()
     {
         return;
     }
+    #ifdef EnableJoNukta
     if (Cnv("J", b_J + b_Nukta) == true) //J+Nukta
     {
         return;
     }
-}
+    #endif
+    if (Cnv("J", b_J) == true) //J
+    {
+        return;
+    }
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::c()
-{
+  void c()
+  {
     if (Cnv("cNG", b_C + b_Hasanta + b_NYA) == true) //C+NYA
     {
         return;
@@ -1692,17 +1472,10 @@ cEnglishToBangla::c()
     {
         return;
     }
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::n()
-{
+  void n()
+  {
     if (Cnv("NgkSh", b_NGA + b_Hasanta + b_K + b_Hasanta + b_Ss) == true) //NGA+Khio
     {
         return;
@@ -1938,18 +1711,10 @@ cEnglishToBangla::n()
     {
         return;
     }
-}
+  }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::k()
-{
+  void k()
+  {
     if (Cnv("kkhN", b_K + b_Hasanta + b_Ss + b_Hasanta + b_Nn) == true) //khioN
     {
         return;
@@ -2027,17 +1792,9 @@ cEnglishToBangla::k()
     {
         return;
     }
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::g()
-{
+  }
+  void g()
+  {
     if (Cnv("ghn", b_GH + b_Hasanta + b_N) == true) //gh+N
     {
         return;
@@ -2127,22 +1884,14 @@ cEnglishToBangla::g()
     {
         return;
     }
+  }
 
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-bool
-cEnglishToBangla::Cnv (String Compare, WideString IfTrue)
-{
+  bool Cnv(std::string Compare, std::string IfTrue)
+  {
     bool tempCnv = false;
 
     int i = 0;
-    String tmp = "";
+    std::string tmp = "";
 
     i = Compare.length();
     tmp = pEnglishText.substr(pos - 1, i);
@@ -2159,41 +1908,22 @@ cEnglishToBangla::Cnv (String Compare, WideString IfTrue)
     }
 
     return tempCnv;
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-void
-cEnglishToBangla::AddRs (WideString T)
-{
+  void AddRs(std::string T)
+  {
     Rs = Rs + T;
     pos = pos + 1;
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-void
-cEnglishToBangla::AddRsEx (WideString T, int p)
-{
+  void AddRsEx(std::string T, int p)
+  {
     Rs = Rs + T;
     pos = pos + p;
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-String
-cEnglishToBangla::PrevT ()
-{
+  std::string PrevT()
+  {
     int i = 0;
 
     i = pos - 1;
@@ -2203,16 +1933,10 @@ cEnglishToBangla::PrevT ()
     }
 
     return pEnglishText.substr(i - 1, 1);
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-String
-cEnglishToBangla::PrevTEx (int Position)
-{
+  std::string PrevTEx(int Position)
+  {
     int i = 0;
 
     i = pos - Position;
@@ -2222,28 +1946,15 @@ cEnglishToBangla::PrevTEx (int Position)
     }
 
     return pEnglishText.substr(i - 1, 1);
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-String
-cEnglishToBangla::NextT	()
-{
+  std::string NextT()
+  {
     return pEnglishText.substr(pos, 1);
-}
+  }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-String
-cEnglishToBangla::NextTEx (int Length, int skipstart)
-{
+  std::string NextTEx(int Length, int skipstart)
+  {
     if (Length < 1)
     {
         Length = 1;
@@ -2252,20 +1963,13 @@ cEnglishToBangla::NextTEx (int Length, int skipstart)
     if (pEnglishText.length()>=(pos + skipstart + Length))
         return pEnglishText.substr(pos + skipstart, Length);
     return "";
+  }
 
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-bool
-cEnglishToBangla::Vowel	(String T)
-{
+  bool Vowel(std::string T)
+  {
     bool tempVowel = false;
 
-    std::transform (T.begin(), T.end(), T.begin(), tolower);
+    std::transform (T.begin(), T.end(), T.begin(), ::tolower);
     if (T == "a" || T == "e" || T == "i" || T == "o" || T == "u")
     {
         tempVowel = true;
@@ -2276,19 +1980,13 @@ cEnglishToBangla::Vowel	(String T)
     }
 
     return tempVowel;
-}
+  }
 
-
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-
-
-bool
-cEnglishToBangla::Consonent(String T)
-{
+  bool Consonent(std::string T)
+  {
     bool tempConsonent = false;
 
-    std::transform (T.begin(), T.end(), T.begin(), tolower);
+    std::transform (T.begin(), T.end(), T.begin(), ::tolower);
 
     if ((T == "b") || (T == "c") || (T == "d") || (T == "f") || (T == "g") || (T == "h") || (T == "j") || (T == "k") || (T == "l") || (T == "m") || (T == "n") || (T == "p") || (T == "q") || (T == "r") || (T == "s") || (T == "t") || (T == "v") || (T == "w") || (T == "x") || (T == "y") || (T == "z"))
     {
@@ -2300,19 +1998,27 @@ cEnglishToBangla::Consonent(String T)
     }
 
     return tempConsonent;
-}
+  }
 
+  bool Number(std::string T)
+  {
+    bool tempNum = false;
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+    if((T == "0") || (T == "1") || (T == "2") || (T == "3") || (T == "4") || (T == "5") || (T == "6") || (T == "7") || (T == "9"))
+    {
+      tempNum = true;
+    } else {
+      tempNum = false;
+    }
 
+    return tempNum;
+  }
 
-bool
-cEnglishToBangla::Begining()
-{
+  bool Begining()
+  {
     bool tempBegining = false;
 
-    String T = "";
+    std::string T = "";
 
     T = PrevT();
 
@@ -2335,7 +2041,29 @@ cEnglishToBangla::Begining()
     }
 
     return tempBegining;
-}
+  }
 
-///////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
+public:
+  /**
+   * @brief Converts phonetic English text to Bangla(Bengali) text.
+   * @param EnglishT The English text to convert.
+   * @return The converted Bangla(Bengali) text.
+   */
+  std::string Convert(const std::string EnglishT){
+    std::string tempConvert ;
+
+    std::string EngStr = "";
+
+    std::string Starting_Ignoreable_T = "";
+    std::string Middle_Main_T = "";
+    std::string Ending_Ignorable_T = "";
+
+    EngStr = CorrectCase(EnglishT);
+    pEnglishText = EngStr;
+    tempConvert = MyConvert();
+
+    return tempConvert;
+  }
+};
+
+#endif /* end of include guard: AVRO_PHONETIC_HPP */
