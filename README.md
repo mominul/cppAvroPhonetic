@@ -4,7 +4,7 @@
 A C++ implementation of Avro Phonetic
 
 ### Overview
-**cppAvroPhonetic** implements the popular Bengali writing solution Avro Phonetic. cppAvroPhonetic has a header only class named **avrophonetic.hpp**. It derives from the parser written for **scim-avro** by Rifat Nabi.  
+**cppAvroPhonetic** implements the popular Bengali writing solution Avro Phonetic. cppAvroPhonetic has a header only class named **avrophonetic.hpp**. It is actually extracted from the parser written for **scim-avro** by Rifat Nabi.
 
 ### Features
 
